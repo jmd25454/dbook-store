@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ViaCepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,13 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get("customer", CustomerController::class);
+
+Route::prefix('customer')->group( function(){
+    Route::get("/", [CustomerController::class, 'index']);
+    Route::get("update/{id}", [CustomerController::class, 'update']);
+});
+
+Route::get('viacep', ViaCepController::class);
 
 Route::middleware([
     'auth:sanctum',
