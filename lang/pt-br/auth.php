@@ -14,7 +14,7 @@ return [
     */
 
     'failed' => 'Essas credenciais nao sao reconhecidas',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'password' => 'Sua senha est&aacute; incorreta!',
+    'throttle' => 'Muitas tentativas de login. Tente novamente em :seconds segundos.',
 
 ];
