@@ -1,4 +1,6 @@
 {
-    "Register": "Salvar",
-    "Log in": "Entrar"
+    "Register": "Registrar",
+    "Log in": "Entrar",
+    "Dashboard": "Painel",
+    "Favorites": "Favoritos"
 }

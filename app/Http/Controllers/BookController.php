@@ -2,22 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Services\GoogleBooksService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class BookController extends Controller
 {
     public function __invoke(Request $request,GoogleBooksService $googleBooksService)
     {
-
         $search = $request->busca ?? "a";
-        $books = $googleBooksService->index($search)->items;
-        return view('dashboard', compact('books'));
+
+        $books = Cache::get("books_{$search}", function() use ($googleBooksService, $search){
+            return $googleBooksService->index($search)->items;
+        }, now()->addMinutes(10));
+
+        $clicked = false;
+        return view('dashboard', compact('books','clicked'));
     }
 
     public function favorites(Request $request)
     {
         return view('favorites');
+    }
+
+    public function addFavoriteBook(string $isbn)
+    {
+        $user_id = auth()->user()->id;
+        Book::create([
+            'isbn' => $isbn,
+            'user_id' => $user_id,
+        ]);
+        return "Adicionado";
     }
 }
