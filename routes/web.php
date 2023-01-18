@@ -20,14 +20,6 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/books', BookController::class);
-
-
-Route::prefix('customer')->group( function(){
-    Route::get("/", [CustomerController::class, 'index']);
-    Route::get("update/{id}", [CustomerController::class, 'update']);
-});
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -35,6 +27,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', BookController::class)->name('dashboard');
     Route::get('/favorites', [BookController::class, 'favorites'])->name('favorites');
+    Route::get('/favorites/{isbn}', [BookController::class, 'addFavoriteBook'])->name('addFavorite');
 });
 
 

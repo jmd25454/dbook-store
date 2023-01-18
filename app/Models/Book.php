@@ -11,6 +11,8 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['isbn', 'user_id'];
+
     public function addFavoriteBook($isbn, $user_id)
     {
         DB::table('books')->insert([
