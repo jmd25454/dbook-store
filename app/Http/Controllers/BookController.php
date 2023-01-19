@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 
 class BookController extends Controller
 {
-    public function __invoke(Request $request,GoogleBooksService $googleBooksService)
+    public function __invoke(Request $request, GoogleBooksService $googleBooksService)
     {
         $search = $request->busca ?? "a";
 
@@ -26,13 +26,23 @@ class BookController extends Controller
         return view('favorites');
     }
 
-    public function addFavoriteBook(string $isbn)
+    public function addFavoriteBook(string $book_id = '')
     {
         $user_id = auth()->user()->id;
         Book::create([
-            'isbn' => $isbn,
+            'book_id' => $book_id,
             'user_id' => $user_id,
         ]);
         return "Adicionado";
+    }
+
+    public function getFavoriteBooks(GoogleBooksService $googleBooksService)
+    {
+        $user_id = auth()->user()->id;
+        $favoriteBooks = Book::where([
+            'user_id' => $user_id
+        ]);
+
+        return $googleBooksService->getBookByID($favoriteBooks);
     }
 }

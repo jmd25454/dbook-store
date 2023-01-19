@@ -3,7 +3,8 @@
         <form method="get" action="">
             <div class="relative text-gray-600">
                 <input type="busca" name="busca" placeholder="Search"
-                    class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none border-gray-300 bg-gray-50" value="{{ request()->busca ?? '' }}">
+                    class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none border-gray-300 bg-gray-50"
+                    value="{{ request()->busca ?? '' }}">
                 <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
                     <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px"
@@ -19,13 +20,10 @@
     <div
         class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last">
         @foreach ($books as $book)
-            <x-book-card
-                thumbnail="{{ $book->volumeInfo->imageLinks->smallThumbnail ?? '' }}"
-                title="{{ $book->volumeInfo->title ?? '' }}"
-                clicked="{{ $clicked }}"
-                isbn="{{ $book->volumeInfo->industryIdentifiers[0]->identifier }}"
-            ></x-book-card>
-
+            <x-book-card thumbnail="{{ $book->volumeInfo->imageLinks->smallThumbnail ?? '' }}"
+                title="{{ $book->volumeInfo->title ?? '' }}" clicked="{{ $clicked }}"
+                book_id="{{ $book->id }}">
+            </x-book-card>
         @endforeach
     </div>
 </x-app-layout>

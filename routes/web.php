@@ -27,7 +27,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', BookController::class)->name('dashboard');
     Route::get('/favorites', [BookController::class, 'favorites'])->name('favorites');
-    Route::get('/favorites/{isbn}', [BookController::class, 'addFavoriteBook'])->name('addFavorite');
+    Route::get('/favorites/{book_id}', [BookController::class, 'addFavoriteBook'])->name('addFavorite');
 });
 
 
