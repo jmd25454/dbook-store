@@ -5,7 +5,7 @@
     <div class="flex flex-col grow justify-between p-4 leading-normal">
         <div class="text-gray-900 font-bold text-xl mb-2">{{ $title ?? '' }}</div>
         <div class="justify-end flex">
-            <a href="{{ route('addFavorite', ['book_id' => $book_id])}}">
+            <a href="{{ $clicked ? route('removeFavorite', ['bookId' => $bookId]) : route('addFavorite', ['bookId' => $bookId])}}">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="{{ $clicked ? 'yellow' : 'none' }}"
                     xmlns="http://www.w3.org/2000/svg">
                     <path

@@ -9,20 +9,20 @@ class BookCard extends Component
 
     public string $thumbnail;
     public string $title;
-    public string $book_id;
     public bool $clicked;
+    public string $bookId;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $thumbnail = '', string $title = '', string $book_id = '', bool $clicked = false)
+    public function __construct(string $thumbnail = '', string $title = '', bool $clicked = false, string $bookId = '')
     {
         $this->thumbnail = !empty($thumbnail) ? str_replace('amp;', '', $thumbnail) : 'http://localhost/storage/book-image/book-image-not-available.png';
         $this->title = $title;
-        $this->book_id = $book_id;
         $this->clicked = $clicked;
+        $this->bookId = $bookId;
     }
 
     /**

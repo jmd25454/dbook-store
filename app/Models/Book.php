@@ -4,22 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Client\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['isbn', 'user_id'];
+    protected $fillable = ['book_id', 'user_id'];
 
-    public function addFavoriteBook($isbn, $user_id)
+    public function userBooks()
     {
-        DB::table('books')->insert([
-            'isbn' => $isbn,
-            'user_id' => $user_id,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+        return $this->where('user_id', auth()->user()->id)
+            ->get()
+        ->toArray();
     }
 }

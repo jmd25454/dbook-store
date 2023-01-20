@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('book_id');
             $table->foreignId('user_id')->constrained('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

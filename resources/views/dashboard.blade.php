@@ -17,12 +17,21 @@
             </div>
         </form>
     </div>
+    <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last'>
+        @if (session('success'))
+            <p>{{ session('success') }}</p>
+        @else
+            <p>{{ session('error') }}</p>
+        @endif
+    </div>
     <div
         class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last">
         @foreach ($books as $book)
-            <x-book-card thumbnail="{{ $book->volumeInfo->imageLinks->smallThumbnail ?? '' }}"
-                title="{{ $book->volumeInfo->title ?? '' }}" clicked="{{ $clicked }}"
-                book_id="{{ $book->id }}">
+            <x-book-card
+                thumbnail="{{ $book->volumeInfo->imageLinks->smallThumbnail ?? '' }}"
+                title="{{ $book->volumeInfo->title ?? '' }}"
+                clicked="{{ in_array($book->id, $favorites) }}"
+                bookId="{{ $book->id }}">
             </x-book-card>
         @endforeach
     </div>
