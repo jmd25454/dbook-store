@@ -1,4 +1,4 @@
-<div class="basis-1/4 grow shrink bg-white rounded-b lg:rounded-b-none lg:rounded-r flex">
+<div class="basis-1/4 grow shrink bg-white flex rounded-lg" style="filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));">
     <div class="h-48 grow-0 lg:w-32 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
         style="background-image: url('{{ $thumbnail }}')">
     </div>
@@ -13,7 +13,6 @@
                         stroke="black" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </a>
-
         </div>
     </div>
 </div>

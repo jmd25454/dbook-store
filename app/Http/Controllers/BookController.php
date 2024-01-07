@@ -51,7 +51,6 @@ class BookController extends Controller
             return redirect()->route('dashboard')->with('error', 'Livro favorito nao encontrado');
         }
 
-        return redirect()->route('dashboard')->with('success', 'livro removido dos favorito com sucesso');
-
+        return back();
     }
 }
