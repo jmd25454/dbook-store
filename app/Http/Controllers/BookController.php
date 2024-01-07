@@ -12,7 +12,7 @@ class BookController extends Controller
 {
     public function __invoke(Request $request, GoogleBooksService $googleBooksService, Book $book)
     {
-        $search = $request->busca ?? "a";
+        $search = $request->busca ?? $this->readable_random_string();
         $books = Cache::get("books_{$search}", function () use ($googleBooksService, $search) {
             return $googleBooksService->index($search)->items;
         }, now()->addMinutes(10));
@@ -24,9 +24,9 @@ class BookController extends Controller
 
     public function favorites(GoogleBooksService $googleBooksService, Book $book)
     {
-        $bookInfo = array_map(function($book) use ($googleBooksService){
+        $bookInfo = array_map(function ($book) use ($googleBooksService) {
             return $googleBooksService->getBookByID($book['book_id']);
-        },$book->userBooks());
+        }, $book->userBooks());
 
         return view('favorites', compact('bookInfo'));
     }
@@ -47,10 +47,28 @@ class BookController extends Controller
 
         $result = $bookService->removeFavoriteBook($bookId, auth()->user()->id);
 
-        if(!$result){
+        if (!$result) {
             return redirect()->route('dashboard')->with('error', 'Livro favorito nao encontrado');
         }
 
         return back();
+    }
+
+    function readable_random_string($length = 6)
+    {
+        $string = '';
+        $vowels = array("a", "e", "i", "o", "u");
+        $consonants = array(
+            'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+            'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'
+        );
+
+        $max = $length / 2;
+        for ($i = 1; $i <= $max; $i++) {
+            $string .= $consonants[rand(0, 19)];
+            $string .= $vowels[rand(0, 4)];
+        }
+
+        return $string;
     }
 }
