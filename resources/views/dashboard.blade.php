@@ -6,7 +6,8 @@
                     class="bg-white h-10 w-full px-5 pr-10 rounded-full text-sm focus:outline-none border-gray-300 bg-gray-50"
                     value="{{ request()->busca ?? '' }}">
                 <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                         <g id="SVGRepo_iconCarrier">
@@ -23,18 +24,26 @@
     <div
         class='max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last'>
         @if (session('success'))
-        <p>{{ session('success') }}</p>
+            <p>{{ session('success') }}</p>
         @else
-        <p>{{ session('error') }}</p>
+            <p>{{ session('error') }}</p>
         @endif
     </div>
-    <div
-        class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last"
+        id="dashboard-list">
         @foreach ($books as $book)
-        <x-book-card thumbnail="{{ $book->volumeInfo->imageLinks->smallThumbnail ?? '' }}"
-            title="{{ $book->volumeInfo->title ?? '' }}" clicked="{{ in_array($book->id, $favorites) }}"
-            bookId="{{ $book->id }}">
-        </x-book-card>
+            <x-book-card
+                thumbnail="{{ $book->volumeInfo->imageLinks->smallThumbnail ?? asset('images/no-book-cover.jpg') }}"
+                title="{{ $book->volumeInfo->title ?? 'No Title Available' }}"
+                clicked="{{ in_array($book->id, $favorites) }}"
+                bookId="{{ $book->id }}"
+                description="{{ $book->volumeInfo->description ?? '' }}"
+                searchInfo="{{ $book->searchInfo->textSnippet ?? '' }}"
+                saleInfo="{{ $book->saleInfo->listPrice->amount ?? '' }}"
+                currencyCode="{{ $book->saleInfo->listPrice->currencyCode ?? '' }}"
+                shop="{{ $book->saleInfo->buyLink ?? '' }}"
+                >
+            </x-book-card>
         @endforeach
     </div>
 </x-app-layout>

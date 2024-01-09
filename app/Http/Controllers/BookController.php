@@ -7,6 +7,7 @@ use App\Services\BookService;
 use App\Services\GoogleBooksService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use NumberFormatter;
 
 class BookController extends Controller
 {
@@ -31,15 +32,16 @@ class BookController extends Controller
         return view('favorites', compact('bookInfo'));
     }
 
-    public function addFavoriteBook(string $bookId)
+    public function addFavoriteBook(string $bookId, GoogleBooksService $googleBooksService)
     {
+        $book_name = $googleBooksService->getBookByID($bookId)->volumeInfo->title;
         $userId = auth()->user()->id;
         Book::create([
             'user_id' => $userId,
             'book_id' => $bookId,
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard', ['busca' => $book_name]);
     }
 
     public function removeFavoriteBook(string $bookId, BookService $bookService)
